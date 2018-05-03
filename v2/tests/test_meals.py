@@ -50,7 +50,7 @@ class TestFlaskApi(unittest.TestCase):
         self.assertEqual(response.status_code, 201)
 
     def test_modify_meal(self):
-        response = self.app.put('/meals/1', data= json.dumps(self.edit_meal), content_type='application/json')
+        response = self.app.put('/meals/2', data= json.dumps(self.edit_meal), content_type='application/json')
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(data['Message'], "Meal details updated.")
