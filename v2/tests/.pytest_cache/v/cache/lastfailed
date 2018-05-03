@@ -1,4 +1,3 @@
 {
-  "test_meals.py::TestFlaskApi::test_add_meal": true,
-  "test_meals.py::TestFlaskApi::test_all_meals": true
+  "test_meals.py::TestFlaskApi::test_modify_meal": true
 }

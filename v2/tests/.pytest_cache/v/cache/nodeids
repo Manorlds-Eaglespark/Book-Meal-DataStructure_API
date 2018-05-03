@@ -1,4 +1,6 @@
 [
   "test_meals.py::TestFlaskApi::test_add_meal",
-  "test_meals.py::TestFlaskApi::test_all_meals"
+  "test_meals.py::TestFlaskApi::test_all_meals",
+  "test_meals.py::TestFlaskApi::test_delete_meal",
+  "test_meals.py::TestFlaskApi::test_modify_meal"
 ]
