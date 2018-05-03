@@ -13,7 +13,6 @@ class TestFlaskApi(unittest.TestCase):
                      }
 
 
-    
     def test_signup_new_user(self):
         """"Test API to create a new user"""
         response = self.app.post('/auth/signup', data= json.dumps(self.userr), content_type='application/json')

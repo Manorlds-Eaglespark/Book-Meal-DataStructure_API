@@ -1,0 +1,3 @@
+{
+  "test_orders.py::TestFlaskApi::test_select_order": true
+}

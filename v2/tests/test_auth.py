@@ -19,7 +19,8 @@ class TestFlaskApi(unittest.TestCase):
         response = self.app.post('/auth/signup', data= json.dumps(self.userr), content_type='application/json')
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 201)
-        self.assertIn('Bob', data['name'])
+        print(data)
+        self.assertIn('User created', data['message'])
     
 
 

@@ -4,6 +4,7 @@ import dummy_data
 from models.meal import Meal
 from models.menu import Menu
 from models.order import Order
+from models.user import User
 from flask import Flask, jsonify, request
 
 
@@ -19,22 +20,26 @@ def signup():
     password = str(request.get_json().get('password'))
     
     #add new user
-    if name and email and password:
-        new_user = {
-            'id': len(users),
-            'name': name,
-            'email': email,
-            'password': password,
-            'login_status':'logged_in'
-        }
-        dummy_data.users.append(new_user)
-
+    if not (name and email and password):
         response = jsonify({
-            "message":"Account created, 200 OK"
+            "message":"Please provide required details"
             })
-        response.status_code = 201
+        response.status_code = 400
         return response
-    #return None
+    created_flag = User.create_user(name, email, password) 
+    if not created_flag:
+        response = jsonify({
+            "message":"User not created"
+            })
+        response.status_code = 400
+        return response
+    response = jsonify({
+            "message":"User created",
+            "status": "200, OK"
+            })
+    response.status_code = 201
+    return response
+
 
 
 #Save a new user to make a signup
@@ -132,8 +137,6 @@ def make_order():
     if not order:
         return Order.bad_order_requestbad_request()
     return Order.order_created_response()
-
-
 
 
 

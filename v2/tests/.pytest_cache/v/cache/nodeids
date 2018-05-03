@@ -1,0 +1,5 @@
+[
+  "test_orders.py::TestFlaskApi::test_modify_order",
+  "test_orders.py::TestFlaskApi::test_orders",
+  "test_orders.py::TestFlaskApi::test_select_order"
+]
