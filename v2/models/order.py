@@ -22,8 +22,8 @@ class Order:
     new_order = Order(meal_id, user_id)
     n_order = {
         'id': new_order.id,
-        'meal_id': new_order.meal_id,
         'user_id': new_order.user_id,
+        'meal_id': new_order.meal_id,
         'time_created': new_order.time_created, 
         'time_expiration': new_order.time_expiration
     }

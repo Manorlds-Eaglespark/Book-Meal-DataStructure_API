@@ -131,7 +131,7 @@ def make_order():
 @app.route('/orders/<int:order_id>', methods=['PUT'])
 def update_order(order_id):
     """Method to modify an Order"""
-    meal_id = request.get_json().get('meal_id')
+    meal_id = str(request.get_json().get('meal_id'))
     if not meal_id:
         return Order.bad_order_request()
     modify = Order.modify_order(order_id, meal_id)
