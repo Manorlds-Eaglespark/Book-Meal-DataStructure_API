@@ -25,5 +25,24 @@ class User:
             dummy_data.users.append(new_user)
             return True
 
+      @staticmethod
+      def login_user(email, password):
+            emails, passwords = [], []    
+            for user in dummy_data.users:
+                  emails.append(user['email'])
+                  passwords.append(user['password'])
+
+            if email in emails and password in passwords:
+                  dummy_data.users[emails.index(email)]['login_status'] = "logged_in"
+                  response = jsonify({
+                        "message":"User successfully logged in",
+                        "status": "200, ok",
+                        "Login status": dummy_data.users[emails.index(email)]['login_status']
+                        })
+                  response.status_code = 200
+                  return response
+    #return None
+
+
 
 

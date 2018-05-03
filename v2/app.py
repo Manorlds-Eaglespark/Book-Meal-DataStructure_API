@@ -18,8 +18,6 @@ def signup():
     name = str(request.get_json().get('name'))
     email = str(request.get_json().get('email'))
     password = str(request.get_json().get('password'))
-    
-    #add new user
     if not (name and email and password):
         response = jsonify({
             "message":"Please provide required details"
@@ -48,24 +46,14 @@ def login():
     """Logging in user"""
     email = str(request.get_json().get('email'))
     password = str(request.get_json().get('password'))
-
-    emails, passwords = [], []    
-    for user in dummy_data.users:
-        emails.append(user['email'])
-        passwords.append(user['password'])
-
-    if email in emails and password in passwords:
-        dummy_data.users[emails.index(email)]['login_status'] = "logged_in"
+    if not (email and password):
         response = jsonify({
-            "message":"User successfully logged in",
-            "status": "200, ok",
-            "Login status": users[emails.index(email)]['login_status']
-            })
-        response.status_code = 200
-        return response
-    #return None
-
-
+            "message": "Enter required details correctly"
+        })
+        response.status_code = 400
+    if email and password:
+        return User.login_user(email, password)
+    
 
 
 #Meals
@@ -143,7 +131,7 @@ def make_order():
 @app.route('/orders/<int:order_id>', methods=['PUT'])
 def update_order(order_id):
     """Method to modify an Order"""
-    meal_id = str(request.get_json().get('meal_id'))
+    meal_id = request.get_json().get('meal_id')
     if not meal_id:
         return Order.bad_order_request()
     modify = Order.modify_order(order_id, meal_id)
