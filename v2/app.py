@@ -108,20 +108,8 @@ def delete_meal(meal_id):
 @app.route('/orders/<int:order_id>', methods=['GET'])
 def select_order(order_id):
     """Method that selects a meal to an order"""
-    all_orders = []    
-    for order in dummy_data.orders:
-        all_orders.append(order['id'])
-    if order_id in all_orders:
-        response =  jsonify({
-            "id": dummy_data.orders[all_orders.index(order_id)]['id'],
-            "meal_id": dummy_data.orders[all_orders.index(order_id)]['mea--l_id'],
-            "user_id": dummy_data.orders[all_orders.index(order_id)]['user_id'],
-            "time_created": dummy_data.orders[all_orders.index(order_id)]['time_created'],
-            "time_expiration": dummy_data.orders[all_orders.index(order_id)]['time_expiration']
-            })
-        response.status_code = 200
-        return response
-
+    return Order.get_order(order_id)
+    
 
 @app.route('/orders', methods=['GET'])
 def get_orders():
@@ -139,7 +127,7 @@ def make_order():
     if not  int(meal_id) or not int(user_id):
         return Order.bad_order_request()
 
-    order = Order(meal_id=meal_id,user_id=user_id)
+    order = Order.add_order(meal_id, user_id)
     
     if not order:
         return Order.bad_order_requestbad_request()
@@ -149,7 +137,7 @@ def make_order():
 
 
 
-@app.route('/order/<int:order_id>', methods=['PUT'])
+@app.route('/orders/<int:order_id>', methods=['PUT'])
 def update_order(order_id):
     """Method to modify an Order"""
     meal_id = str(request.get_json().get('meal_id'))

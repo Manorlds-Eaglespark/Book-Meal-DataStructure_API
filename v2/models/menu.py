@@ -30,17 +30,17 @@ class Menu:
             meal_ids = meal_ids.split(",")
             for i in range(len(meal_ids)):
                   #checking if digit
-                  if meal_ids[i].isnumeric():
-                        meal_ids[i] = int(meal_ids[i])
-                  else:
+                  if not meal_ids[i].isdigit():
+                        
                         response = jsonify({
                         'message': "Please add only integer values as ids",
                         'status':  "400, Bad Request"
                         })
                         response.status_code = 400
-                        return response 
+                        return response
+                  meal_ids[i] = int(meal_ids[i])
             
-            system_meals = []
+            system_meals, months_days = [], []
             for meal in dummy_data.meals:
                   system_meals.append(int(meal['id']))
 
@@ -50,8 +50,8 @@ class Menu:
                         'message': "You added a meal not in the system",
                         'status':  "400, Bad Request"
                         })
-                  response.status_code = 400
-                  return response
+                        response.status_code = 400
+                        return response
 
 
             for month_day in dummy_data.menus:
@@ -85,5 +85,5 @@ class Menu:
                   })
             response.status_code = 201
             return response
-            #return None
+            
 

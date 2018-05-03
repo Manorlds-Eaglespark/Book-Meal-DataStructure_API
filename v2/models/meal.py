@@ -77,6 +77,6 @@ class Meal:
             response = jsonify({
                 "message":"meal deleted"
                 })
-            response.status_code = 401  #resouce deleted code
+            response.status_code = 401  #resource deleted code
             return response
         return bad_request()
