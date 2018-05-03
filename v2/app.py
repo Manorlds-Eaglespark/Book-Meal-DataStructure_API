@@ -1,6 +1,9 @@
 """This is the API file for the Book-A-Meal application"""
 import time
 import dummy_data
+from models.meal import Meal
+from models.menu import Menu
+from models.order import Order
 from flask import Flask, jsonify, request
 
 
@@ -58,30 +61,14 @@ def login():
     #return None
 
 
-@app.route('/orders/<int:order_id>', methods=['GET'])
-def select_order(order_id):
-    """Method that selects a meal to an order"""
-    all_orders = []    
-    for order in dummy_data.orders:
-        all_orders.append(order['id'])
-    if order_id in all_orders:
-        response =  jsonify({
-            "id": dummy_dataorders[all_orders.index(order_id)]['id'],
-            "meal_id": dummy_data.orders[all_orders.index(order_id)]['meal_id'],
-            "user_id": dummy_data.orders[all_orders.index(order_id)]['user_id'],
-            "time_created": dummy_data.orders[all_orders.index(order_id)]['time_created'],
-            "time_expiration": dummy_data.orders[all_orders.index(order_id)]['time_expiration']
-            })
-        response.status_code = 200
-        return response
 
+
+#Meals
 
 @app.route('/meals/', methods=['GET'])
 def get_all_meals():
     """This method returns all meals stored in the system"""
-    response = jsonify({'meals': dummy_data.meals}) 
-    response.status_code = 200
-    return response
+    return Meal.all_meals()
 
 
 
@@ -90,24 +77,57 @@ def add_a_meal():
     """A Method to add a meal to the system"""
     name = str(request.get_json().get('name'))
     price = str(request.get_json().get('price'))
-    time_created = str(request.get_json().get('time_created'))
-    if name and price and time_created:
-        response = jsonify({
-            "id": len(meals),
-            "name": name,
-            "price": price,
-            "time_creatd": time.asctime(time.localtime(time.time())),
-            "time_expiration": time.asctime(time.localtime(time.time() + 600))
+    
+    if len(name) <= 0 or len(price) <=0:
+        return Meal.bad_request()
+    meal = Meal(name=name,price=price)
+    if not meal:
+        return Meal.bad_request()
+    return Meal.meal_created_response()
+    
+
+
+@app.route('/meals/<int:meal_id>', methods=['PUT'])
+def modify_meal(meal_id):
+    """Method to modify an Meal"""
+    name = str(request.get_json().get('name'))
+    price = str(request.get_json().get('price'))
+    if name and price:
+        return Meal.update_meal(meal_id, name, price)
+    return Meal.bad_request()
+
+
+
+@app.route('/meals/<int:meal_id>', methods=['DELETE'])
+def delete_meal(meal_id):
+    """Method to modify an Meal"""
+    return Meal.delete_meal(meal_id)
+
+#Orders
+
+@app.route('/orders/<int:order_id>', methods=['GET'])
+def select_order(order_id):
+    """Method that selects a meal to an order"""
+    all_orders = []    
+    for order in dummy_data.orders:
+        all_orders.append(order['id'])
+    if order_id in all_orders:
+        response =  jsonify({
+            "id": dummy_data.orders[all_orders.index(order_id)]['id'],
+            "meal_id": dummy_data.orders[all_orders.index(order_id)]['mea--l_id'],
+            "user_id": dummy_data.orders[all_orders.index(order_id)]['user_id'],
+            "time_created": dummy_data.orders[all_orders.index(order_id)]['time_created'],
+            "time_expiration": dummy_data.orders[all_orders.index(order_id)]['time_expiration']
             })
-        response.status_code = 201
+        response.status_code = 200
         return response
-    #return None
 
 
 @app.route('/orders', methods=['GET'])
 def get_orders():
     """A Method that returns all the orders made"""
-    return jsonify({'orders': orders})
+    return jsonify({'orders': dummy_data.orders})
+
 
 
 @app.route('/orders', methods=['POST'])
@@ -115,48 +135,42 @@ def make_order():
     """A Method to make a new Order"""
     meal_id = request.get_json().get('meal_id')
     user_id = request.get_json().get('user_id')
-    if meal_id and user_id:
-        response = jsonify({
-            'meal_id': meal_id,
-            'user_id': user_id,
-            'Expiration time': time.asctime(time.localtime( \
-            time.time()  + 600))
-            })
-        response.status_code = 201
-        return response
-    #return None
+    
+    if not  int(meal_id) or not int(user_id):
+        return Order.bad_order_request()
+
+    order = Order(meal_id=meal_id,user_id=user_id)
+    
+    if not order:
+        return Order.bad_order_requestbad_request()
+    return Order.order_created_response()
+
+
+
 
 
 @app.route('/order/<int:order_id>', methods=['PUT'])
-#def modify_order(order_id):
-def modify_order():
+def update_order(order_id):
     """Method to modify an Order"""
     meal_id = str(request.get_json().get('meal_id'))
-    response = jsonify({
-        'new meal_id': meal_id,
-        'date_created': "original created time",
-        'date_updated': time.asctime(time.localtime(time.time()))
-        })
-    response.status_code = 200
-    return response
+    if not meal_id:
+        return Order.bad_order_request()
+    modify = Order.modify_order(order_id, meal_id)
+    if not modify:
+        return Order.bad_order_request()
+    return Order.order_modified_response()
+    
 
+
+
+
+#Menu
 
 @app.route('/menu/', methods=['GET'])
 def get_menu():
     """A Method to return the menu for the day"""
-    months_days = []
-    for month_day in menus:
-        months_days.append((month_day['time_created'][:10]))
-    
-    today_month_day =  (time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())))[:10]
-    if today_month_day in months_days:
-        response = jsonify({
-             'id': menus[months_days.index(today_month_day)]['id'],
-             'meal_ids': menus[months_days.index(today_month_day)]['meal_ids'],
-             'time_created': menus[months_days.index(today_month_day)]['time_created']
-        }) 
-        response.status_code = 200
-        return response
+    return Menu.get_today_menu()
+
  
 
 
@@ -164,48 +178,8 @@ def get_menu():
 def create_menu():
     """Method to create a menu for that day"""
     meal_ids = str(request.get_json().get('meal_ids'))
-
-    meal_ids = meal_ids.split(",")
-    for i in range(len(meal_ids)):
-        #checking if digit
-        if meal_ids[i].isdigit():
-            meal_ids[i] = int(meal_ids[i])
-        else:
-            response = jsonify({
-            'message': "Please add only integer values as ids",
-            'status':  "400, Bad Request"
-            })
-            response.status_code = 400
-            return response 
+    return Menu.create_menu_item(meal_ids)
     
-    system_meals = []
-    for meal in dummy_data.meals:
-        system_meals.append(int(meal['id']))
-
-    for m_ids in meal_ids:
-        if m_ids not in system_meals:
-            response = jsonify({
-            'message': "You added a meal not in the system",
-            'status':  "400, Bad Request"
-            })
-        response.status_code = 400
-        return response 
-            
-        todays_menu = {
-            'id': len(dummy_data.menus),
-            'meal_ids': meal_ids,
-            'time_created': time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
-        }
-        menus.append(todays_menu)
-   
-        response = jsonify({
-            'message': "Today's menu has been loaded",
-            'status':  "201, created"
-            })
-        response.status_code = 201
-        return response
-    #return None
-
 
 
 if __name__ == '__main__':

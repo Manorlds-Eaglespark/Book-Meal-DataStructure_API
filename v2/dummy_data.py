@@ -25,7 +25,7 @@ meals = [
         'id': 0,
         'name': 'Chips and Chicken',
         'price': '10000',
-        'time_created': 'Wed May  2 16:29:35 2018',
+        'time_created': 'Wed May  2 16:29:35 2018'
     },
     {
         'id': 1,
