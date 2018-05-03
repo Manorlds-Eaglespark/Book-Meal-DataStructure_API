@@ -9,7 +9,7 @@ class Meal:
    
    #Constructor
     def __init__(self, name, price):
-      self.id = random.randint(1001)
+      self.id = random.randint(0,1001)
       self.name = name
       self.price = price
       self.time_created = time.asctime(time.localtime(time.time()))

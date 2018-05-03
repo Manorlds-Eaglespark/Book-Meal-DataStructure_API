@@ -1,5 +1,4 @@
 [
-  "test_orders.py::TestFlaskApi::test_modify_order",
-  "test_orders.py::TestFlaskApi::test_orders",
-  "test_orders.py::TestFlaskApi::test_select_order"
+  "test_meals.py::TestFlaskApi::test_add_meal",
+  "test_meals.py::TestFlaskApi::test_all_meals"
 ]

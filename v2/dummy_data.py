@@ -21,19 +21,19 @@ users = [
 
 meals = [
     {
-        'id': 0,
+        'id': 1,
         'name': 'Chips and Chicken',
         'price': '10000',
         'time_created': 'Wed May  2 16:29:35 2018'
     },
     {
-        'id': 1,
+        'id': 2,
         'name': 'Beef and Rice',
         'price': '25000',
         'time_created': 'Wed May  2 16:29:35 2018',
     },
     {
-        'id': 2,
+        'id': 3,
         'name': 'Chicken and Matooke',
         'price': '35000',
         'time_created': 'Wed May  2 16:29:35 2018',
