@@ -20,18 +20,26 @@ class Meal:
         response.status_code = 200
         return response
 
-    def add_meal(self, id, name, price, time_created):
-            global meals
-            new_meal = {
-                'id': id,
-                'name': name,
-                'price': price,
-                'time_created': time_created 
-            }
-            meals.append(new_meal)
-            return True
+    @staticmethod    
+    def add_meal(name, price):
+        global meals
 
-        
+        print(meals)
+        meal = [meal for meal in meals if meal['name'] == name]
+
+        if meal:
+            return False
+
+        new_meal = {
+            'id': random.randint(0,1001),
+            'name': name,
+            'price': price,
+            'time_created': time.asctime(time.localtime(time.time())) 
+        }
+        dummy_data.meals.append(new_meal)
+        return True
+
+    @staticmethod
     def bad_request():
         response =  jsonify({
             "message": "Bad request"

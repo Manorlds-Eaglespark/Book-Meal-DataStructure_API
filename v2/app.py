@@ -69,13 +69,15 @@ def add_a_meal():
     name = str(request.get_json().get('name'))
     price = str(request.get_json().get('price'))
 
-    if len(name) <= 0 or len(price) <= 0:
+    if len(name) <= 0 and len(price) <= 0:
         return Meal.bad_request()
-    meal = Meal(name=name, price=price)
+    meal = Meal.add_meal(name=name, price=price)
+    print(meal)
     if not meal:
         return Meal.bad_request()
     return Meal.meal_created_response()
-
+    
+    
 
 @app.route('/meals/<int:meal_id>', methods=['PUT'])
 def modify_meal(meal_id):

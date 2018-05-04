@@ -78,8 +78,20 @@ menus = [
     {
         'id': 1,
         'meal_ids': '4,2,5,6,7',
-        'time_created': '2018-05-03 17:13:38'
+        'time_created': '2018-05-04 17:13:38'
+    },
+    {
+        'id': 1,
+        'meal_ids': '5,6,7',
+        'time_created': '2018-05-05 17:13:38'
+    },
+     {
+        'id': 1,
+        'meal_ids': '4,2,5,6,7',
+        'time_created': '2018-05-06 17:13:38'
     }
 ]
 
+
+# menu = [menu for menu in menus if menu ['id'] == 1 ] 
 
