@@ -8,7 +8,7 @@ Book-A-Meal is an application that allows customers to make food orders and help
 This is an API version 2 api for the application. Find version 1 here: https://github.com/Manorlds-Eaglespark/Book-A-Meal
 
 
-# Front end
+# Front End
 Follow this link to go through mock pages the get the idea of the kind of application this application servers. manorlds-eaglespark.github.io/Book-A-Meal/
 
 
@@ -16,7 +16,7 @@ Follow this link to go through mock pages the get the idea of the kind of applic
 This Application is being written using Python and built using the Flask API micro api platform.
 
 
-# Running tests
+# Running Tests
 Please move the the test directory and use your favourite testing tool. Atleast most will work: unittests, nosetests, pytests and coverage
 
 # Author
