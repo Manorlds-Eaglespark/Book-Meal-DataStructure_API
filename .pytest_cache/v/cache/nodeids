@@ -1,0 +1,17 @@
+[
+  "v2/tests/test_auth.py::TestFlaskApi::test_login_user",
+  "v2/tests/test_auth.py::TestFlaskApi::test_signup_new_user",
+  "v2/tests/test_meals.py::TestFlaskApi::test_add_existing_meal",
+  "v2/tests/test_meals.py::TestFlaskApi::test_add_meal",
+  "v2/tests/test_meals.py::TestFlaskApi::test_all_meals",
+  "v2/tests/test_meals.py::TestFlaskApi::test_delete_meal",
+  "v2/tests/test_meals.py::TestFlaskApi::test_delete_non_existing_meal",
+  "v2/tests/test_meals.py::TestFlaskApi::test_modify_meal",
+  "v2/tests/test_meals.py::TestFlaskApi::test_update_empty_name_or_price",
+  "v2/tests/test_menu.py::TestFlaskApi::test_create_today_menu_meals_not_available",
+  "v2/tests/test_menu.py::TestFlaskApi::test_create_today_non_integers_entered",
+  "v2/tests/test_menu.py::TestFlaskApi::test_today_menu",
+  "v2/tests/test_orders.py::TestFlaskApi::test_modify_order",
+  "v2/tests/test_orders.py::TestFlaskApi::test_orders",
+  "v2/tests/test_orders.py::TestFlaskApi::test_select_order"
+]
