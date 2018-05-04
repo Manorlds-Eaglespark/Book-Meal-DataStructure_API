@@ -1,11 +1,10 @@
 """This is the API file for the Book-A-Meal application"""
-import time
-import dummy_data
+from flask import Flask, jsonify, request
 from models.meal import Meal
 from models.menu import Menu
 from models.order import Order
 from models.user import User
-from flask import Flask, jsonify, request
+import dummy_data
 
 
 app = Flask(__name__)
@@ -24,7 +23,7 @@ def signup():
             })
         response.status_code = 400
         return response
-    created_flag = User.create_user(name, email, password) 
+    created_flag = User.create_user(name, email, password)
     if not created_flag:
         response = jsonify({
             "message":"User not created"
@@ -32,9 +31,9 @@ def signup():
         response.status_code = 400
         return response
     response = jsonify({
-            "message":"User created",
-            "status": "200, OK"
-            })
+        "message":"User created",
+        "status": "200, OK"
+        })
     response.status_code = 201
     return response
 
@@ -51,10 +50,9 @@ def login():
             "message": "Enter required details correctly"
         })
         response.status_code = 400
+        return response
     if email and password:
         return User.login_user(email, password)
-    
-
 
 #Meals
 
@@ -70,14 +68,13 @@ def add_a_meal():
     """A Method to add a meal to the system"""
     name = str(request.get_json().get('name'))
     price = str(request.get_json().get('price'))
-    
-    if len(name) <= 0 or len(price) <=0:
+
+    if len(name) <= 0 or len(price) <= 0:
         return Meal.bad_request()
-    meal = Meal(name=name,price=price)
+    meal = Meal(name=name, price=price)
     if not meal:
         return Meal.bad_request()
     return Meal.meal_created_response()
-    
 
 
 @app.route('/meals/<int:meal_id>', methods=['PUT'])
@@ -102,7 +99,7 @@ def delete_meal(meal_id):
 def select_order(order_id):
     """Method that selects a meal to an order"""
     return Order.get_order(order_id)
-    
+
 
 @app.route('/orders', methods=['GET'])
 def get_orders():
@@ -116,12 +113,13 @@ def make_order():
     """A Method to make a new Order"""
     meal_id = request.get_json().get('meal_id')
     user_id = request.get_json().get('user_id')
-    
+
+
     if not  int(meal_id) or not int(user_id):
         return Order.bad_order_request()
 
     order = Order.add_order(meal_id, user_id)
-    
+
     if not order:
         return Order.bad_order_requestbad_request()
     return Order.order_created_response()
@@ -138,7 +136,7 @@ def update_order(order_id):
     if not modify:
         return Order.bad_order_request()
     return Order.order_modified_response()
-    
+
 
 
 
@@ -150,17 +148,13 @@ def get_menu():
     """A Method to return the menu for the day"""
     return Menu.get_today_menu()
 
- 
-
-
 @app.route('/menu/', methods=['POST'])
 def create_menu():
     """Method to create a menu for that day"""
     meal_ids = str(request.get_json().get('meal_ids'))
     return Menu.create_menu_item(meal_ids)
-    
+
 
 
 if __name__ == '__main__':
     app.run(host='localhost', port=5004, debug=True)
-    
