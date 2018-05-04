@@ -1,5 +1,0 @@
-{
-  "test_meals.py::TestFlaskApi::test_add_existing_meal": true,
-  "test_meals.py::TestFlaskApi::test_add_meal": true,
-  "test_menu.py::TestFlaskApi::test_create_today_menu": true
-}

@@ -1,7 +1,0 @@
-{
-  "test_app.py::TestFlaskApi::test_all_meals": true,
-  "test_app.py::TestFlaskApi::test_orders": true,
-  "test_app.py::TestFlaskApi::test_signup_new_user": true,
-  "test_app.py::TestFlaskApi::test_today_menu": true,
-  "tests/test_menu.py::TestFlaskApi::test_create_today_menu": true
-}
