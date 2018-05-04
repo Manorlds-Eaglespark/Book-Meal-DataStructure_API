@@ -23,26 +23,6 @@ class TestFlaskApi(unittest.TestCase):
     def test_all_meals(self):
         response = self.app.get('/meals/')
         data = json.loads(response.data)
-        """ self.assertEqual(data['meals'], [
-            {
-                'id': 1,
-                'name': 'Chips and Chicken',
-                'price': '10000',
-                'time_created': 'Wed May  2 16:29:35 2018'
-            },
-            {
-                'id': 2,
-                'name': 'Beef and Rice',
-                'price': '25000',
-                'time_created': 'Wed May  2 16:29:35 2018',
-            },
-            {
-                'id': 3,
-                'name': 'Chicken and Matooke',
-                'price': '35000',
-                'time_created': 'Wed May  2 16:29:35 2018',
-            }
-        ])  """
         self.assertEqual(response.status_code, 200)
 
 
@@ -63,6 +43,15 @@ class TestFlaskApi(unittest.TestCase):
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 400)
 
+    def test_adding_non_digit_price_details(self):
+        add_meal_not_number = {
+            'name': 'Chips and Chicken',
+            'price': 'fgffd'
+        }
+        response = self.app.post('/meals/', data=json.dumps(add_meal_not_number), content_type='application/json')
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 400)
+
     def test_delete_non_existing_meal(self):
         response = self.app.delete('/meals/100', data=json.dumps(self.add_meal_exists), content_type='application/json')
         self.assertEqual(response.status_code, 400)
@@ -73,6 +62,11 @@ class TestFlaskApi(unittest.TestCase):
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(data['message'], "Meal details updated.")
+
+    def test_modify_non_existing_meal(self):
+        response = self.app.put('/meals/200', data=json.dumps(self.edit_meal), content_type='application/json')
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 400)
 
     def test_delete_meal(self):
         response = self.app.delete('/meals/1')

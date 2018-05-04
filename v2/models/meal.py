@@ -29,6 +29,9 @@ class Meal:
         if meal:
             return False
 
+        if not price.isdigit():
+            return False
+
         new_meal = {
             'id': random.randint(0,1001),
             'name': name,
@@ -58,8 +61,16 @@ class Meal:
         
 
     def update_meal(id, name, price):
-      
-        meal = [meal for meal in meals if meal['id'] == id][0] 
+        
+        meal = [meal for meal in meals if meal['id'] == id]
+
+        if not meal:
+            response= jsonify({
+                "message":"Meal does not exist. May be add meal instead!?"
+            })
+            response.status_code = 400
+            return response
+        meal = meal[0] 
 
         meal['name'] = name
         meal['price'] = price

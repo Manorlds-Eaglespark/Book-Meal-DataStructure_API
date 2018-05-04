@@ -24,7 +24,30 @@ class TestFlaskApi(unittest.TestCase):
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 201)
         self.assertIn('User created', data['message'])
+
     
+    def test_wrong_details(self):
+        userr = {
+            "email": "vsdfsds@dfdf.com", 
+            "password": "fdsfsf"
+        }
+        """"Test API to create a new user"""
+        response = self.app.post('/auth/login', data= json.dumps(userr), content_type='application/json')
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 400)
+
+
+    def test_empty_details(self):
+        userr = {
+            "name": "",
+            "email": "", 
+            "password": ""
+        }
+        """"Test API to create a new user"""
+        response = self.app.post('/auth/signup', data= json.dumps(userr), content_type='application/json')
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 400)
+
 
     def test_login_user(self):
         """"Test API for logging in user"""

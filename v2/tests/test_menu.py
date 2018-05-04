@@ -40,7 +40,7 @@ class TestFlaskApi(unittest.TestCase):
         response = response = self.app.post('/menu/', data= json.dumps(self.meals_not), content_type='application/json')
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 400) 
-
+        
     def test_create_today_non_integers_entered(self):
         "Testing if meals not ints"  
         response = response = self.app.post('/menu/', data= json.dumps(self.meals_not_ints), content_type='application/json')

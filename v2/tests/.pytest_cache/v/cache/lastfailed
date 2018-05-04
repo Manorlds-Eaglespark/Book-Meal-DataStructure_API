@@ -1,0 +1,3 @@
+{
+  "test_meals.py::TestFlaskApi::test_adding_empty_details": true
+}

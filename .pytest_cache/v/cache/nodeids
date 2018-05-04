@@ -10,6 +10,7 @@
   "v2/tests/test_meals.py::TestFlaskApi::test_update_empty_name_or_price",
   "v2/tests/test_menu.py::TestFlaskApi::test_create_today_menu_meals_not_available",
   "v2/tests/test_menu.py::TestFlaskApi::test_create_today_non_integers_entered",
+  "v2/tests/test_menu.py::TestFlaskApi::test_empty_input",
   "v2/tests/test_menu.py::TestFlaskApi::test_today_menu",
   "v2/tests/test_orders.py::TestFlaskApi::test_modify_order",
   "v2/tests/test_orders.py::TestFlaskApi::test_orders",

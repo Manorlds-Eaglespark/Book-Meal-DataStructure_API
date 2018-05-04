@@ -41,3 +41,9 @@ class User:
                         })
                   response.status_code = 200
                   return response
+            response = jsonify(
+                        {
+                              "message":"User not successfully logged in",
+                        })
+            response.status_code = 400
+            return response

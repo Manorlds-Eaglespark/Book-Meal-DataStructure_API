@@ -1,13 +1,25 @@
 """This is the API file for the Book-A-Meal application"""
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, session
 from models.meal import Meal
 from models.menu import Menu
 from models.order import Order
 from models.user import User
+from functools import wraps
 import dummy_data
 
 
 app = Flask(__name__)
+
+app.secret_key = "secretkey"
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not "test" in session:
+            return "Unathorization access"
+        return f(*args, **kwargs)
+    return decorated_function
+
 
 
 #Save a new user to make a signup
@@ -52,11 +64,13 @@ def login():
         response.status_code = 400
         return response
     if email and password:
+        session["test"] = True
         return User.login_user(email, password)
 
 #Meals
 
 @app.route('/meals/', methods=['GET'])
+#@login_required
 def get_all_meals():
     """This method returns all meals stored in the system"""
     return Meal.all_meals()
