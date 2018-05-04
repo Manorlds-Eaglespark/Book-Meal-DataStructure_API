@@ -24,7 +24,6 @@ class Meal:
     def add_meal(name, price):
         global meals
 
-        print(meals)
         meal = [meal for meal in meals if meal['name'] == name]
 
         if meal:
@@ -59,40 +58,34 @@ class Meal:
         
 
     def update_meal(id, name, price):
-        meal_ids = []    
-        for meal in dummy_data.meals:
-            meal_ids.append(meal['id'])
-        if id in meal_ids:
-            dummy_data.meals[meal_ids.index(id)]['name'] = name
-            dummy_data.meals[meal_ids.index(id)]['price'] = price
-            dummy_data.meals[meal_ids.index(id)]['time_created'] = time.asctime(time.localtime(time.time()))
+      
+        meal = [meal for meal in meals if meal['id'] == id][0] 
 
-            response = jsonify({
-                "Message":"Meal details updated." 
-            }) 
-            response.status_code = 200
-            return response
-        response =  jsonify({
-            "message": "Bad request"
-            })
-        response.status_code = 400
+        meal['name'] = name
+        meal['price'] = price
+        meal['time_created'] = time.asctime(time.localtime(time.time())) 
+        i = meals.index(meal)
+        meals[i] = meal
+        response = jsonify({
+            "message":"Meal details updated." 
+        }) 
+        response.status_code = 200
         return response
+    
 
         
 
     def delete_meal(id):
-        meal_ids = []    
-        for meal in dummy_data.meals:
-            meal_ids.append(meal['id'])
-        if id in meal_ids:
-            del dummy_data.meals[meal_ids.index(id)]
-            response = jsonify({
-                "message":"meal deleted"
+        meal = [meal for meal in meals if meal['id'] == id]
+        if not meal:
+            response =  jsonify({
+                "message": "Bad request"
                 })
-            response.status_code = 200  #resource deleted code
+            response.status_code = 400
             return response
-        response =  jsonify({
-            "message": "Bad request"
+        dummy_data.meals.remove(meal[0])
+        response = jsonify({
+            "message":"meal deleted"
             })
-        response.status_code = 400
+        response.status_code = 200  #resource deleted code
         return response

@@ -63,12 +63,16 @@ class TestFlaskApi(unittest.TestCase):
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 400)
 
+    def test_delete_non_existing_meal(self):
+        response = self.app.delete('/meals/100', data=json.dumps(self.add_meal_exists), content_type='application/json')
+        self.assertEqual(response.status_code, 400)
+
 
     def test_modify_meal(self):
         response = self.app.put('/meals/2', data=json.dumps(self.edit_meal), content_type='application/json')
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(data['Message'], "Meal details updated.")
+        self.assertEqual(data['message'], "Meal details updated.")
 
     def test_delete_meal(self):
         response = self.app.delete('/meals/1')
@@ -76,6 +80,18 @@ class TestFlaskApi(unittest.TestCase):
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(data['message'], "meal deleted")
+
+    def test_update_empty_name_or_price(self):
+        add_meal_r = {
+            'name': '',
+            'price': ''
+        }
+        response = self.app.put('/meals/2', data=json.dumps(add_meal_r), content_type='application/json')
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(data['message'], "please add all details.")
+
+
     
 
     

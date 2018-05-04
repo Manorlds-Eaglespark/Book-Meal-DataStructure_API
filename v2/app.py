@@ -84,10 +84,15 @@ def modify_meal(meal_id):
     """Method to modify an Meal"""
     name = str(request.get_json().get('name'))
     price = str(request.get_json().get('price'))
-    if name and price:
-        return Meal.update_meal(meal_id, name, price)
-    return Meal.bad_request()
+    if not (name or price):
+        response = jsonify({
+                "message":"please add all details."
+            })
+        response.status_code = 400
+        return response
 
+    return Meal.update_meal(meal_id, name, price)
+    
 
 
 @app.route('/meals/<int:meal_id>', methods=['DELETE'])
