@@ -8,8 +8,8 @@ install:
   - pip install coveralls
   
 script:
-  - coverage run --source= '.'/api/v2/test_app.py 
-  -coverage -report
+  - coverage run --source= '.'/v2/tests 
+  - coverage -report
   
 after_success:
   - coveralls
