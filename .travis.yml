@@ -3,12 +3,12 @@ python:
   - "3.6" 
 
 install:
-  - pip install -r ./requirements.txt
+  - pip install -r requirements.txt
   - pip install coverage
   - pip install coveralls
   
 script:
-  - coverage run --source= '.'/v2/tests 
+   - pytest --cov=./  
   - coverage -report
   
 after_success:
