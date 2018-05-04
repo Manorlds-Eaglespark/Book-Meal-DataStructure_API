@@ -4,12 +4,11 @@ python:
 
 install:
   - pip install -r requirements.txt
-  - pip install coverage
+  - pip install nose2
   - pip install coveralls
   
 script:
-   - pytest --cov=./  #work
-  - coverage -report
+ - nosetests --with-coverage --cover-package= ./v2/app.py 
   
 after_success:
   - coveralls
