@@ -26,11 +26,15 @@ class Menu:
     
             today_month_day =  (time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())))[:10]
             if today_month_day in months_days:
+                  
+                  menu_meals = []
+                  the_meals = dummy_data.menus[months_days.index(today_month_day)]['meal_ids'].split(",")
+                  the_meals = list(map(int, the_meals))
+                  for i in the_meals:
+                        menu_meals.append([meal for meal in dummy_data.meals if meal ['id'] == i ])
                   response = jsonify({
-                        'id': dummy_data.menus[months_days.index(today_month_day)]['id'],
-                        'meal_ids': dummy_data.menus[months_days.index(today_month_day)]['meal_ids'],
-                        'time_created': dummy_data.menus[months_days.index(today_month_day)]['time_created']
-                  }) 
+                        "Today's Meals":menu_meals
+                  })
                   response.status_code = 200
                   return response
             response =  jsonify({
@@ -72,12 +76,8 @@ class Menu:
     
             today_month_day =  (time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())))[:10]
             if today_month_day in months_days:
-                  meal_string = ""
-                  for i in meal_ids:
-                        meal_string += i+','
-                  meal_string[len(meal_string)] = ''; 
-
-                  dummy_data.menus[months_days.index(today_month_day)]['meal_ids'] = meal_string
+                  
+                  dummy_data.menus[months_days.index(today_month_day)]['meal_ids'] = meal_idz
                   dummy_data.menus[months_days.index(today_month_day)]['time_created'] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
                   
                   response = jsonify({

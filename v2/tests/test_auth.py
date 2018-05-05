@@ -8,14 +8,19 @@ class TestFlaskApi(unittest.TestCase):
     def setUp(self):
         self.app = app.app.test_client()
         self.userr = {
-                        "name": "Bob",
-                        "email": "bob@gmail.com", 
-                        "password": "xxy210"
-                     }
+            "name": "Bob",
+            "email": "bob@gmail.com", 
+            "password": "xxy210"
+            }
         self.user_details = {
-                                "email": "bob@gmail.com", 
-                                "password": "xxy210",
-                            }
+            "email": "bob@gmail.com", 
+            "password": "xxy210",
+            }
+        self.usr = {
+            "name": "Bob",
+            "email": "bob@gmail.com", 
+            "password": "xx"
+            }
 
 
     
@@ -25,6 +30,12 @@ class TestFlaskApi(unittest.TestCase):
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 201)
         self.assertIn('User created', data['message'])
+
+    def test_signup_short_password(self):
+        """"Test API to create a new user short password"""
+        response = self.app.post('/auth/signup', data= json.dumps(self.usr), content_type='application/json')
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 400)
 
     
     def test_wrong_details(self):

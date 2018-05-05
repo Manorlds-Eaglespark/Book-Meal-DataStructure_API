@@ -18,6 +18,9 @@ class User:
             EMAIL_REGEX = re.compile(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)")
             if not EMAIL_REGEX.match(email):
                   return False 
+
+            if len(password) < 3:
+                  return False 
             
             if not name.replace(" ","").isalpha():
                   return False

@@ -100,3 +100,21 @@ class Meal:
             })
         response.status_code = 200  #resource deleted code
         return response
+
+    def get_meal(id):
+        system_meals =  []
+        for meal in dummy_data.meals:
+                system_meals.append(int(meal['id']))
+
+        if id not in system_meals:
+            response =  jsonify({
+                "message": "Meal Not Found"
+                })
+            response.status_code = 400
+            return response
+        meal = [meal for meal in meals if meal['id'] == id]
+        response = jsonify({
+            "Meal": meal
+            })
+        response.status_code = 200 
+        return response

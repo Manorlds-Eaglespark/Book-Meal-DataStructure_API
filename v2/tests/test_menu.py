@@ -24,16 +24,7 @@ class TestFlaskApi(unittest.TestCase):
     def test_today_menu(self):
         response = self.app.get('/menu/')
         data = json.loads(response.data)
-        self.assertIn(data['meal_ids'], '4,2,5,6,7' )
         self.assertEqual(response.status_code, 200)
-    
-
-    """  def test_create_today_menu(self):
-        "Testing creation of a menu"    
-        response = self.app.post('/menu/', data= json.dumps(self.today_meals), content_type='application/json')
-        data = json.loads(response.data)
-        self.assertIn("Today's menu has been set", data['message'])
-        self.assertEqual(response.status_code, 201)  """
 
     def test_create_today_menu_meals_not_available(self):
         "Testing if meals not in system"  
@@ -45,7 +36,8 @@ class TestFlaskApi(unittest.TestCase):
         "Testing if meals not ints"  
         response = response = self.app.post('/menu/', data= json.dumps(self.meals_not_ints), content_type='application/json')
         data = json.loads(response.data)
-        self.assertEqual(response.status_code, 400)   
+        self.assertEqual(response.status_code, 400) 
+ 
 
 if __name__ == "__main__":
     unittest.main()

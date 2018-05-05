@@ -39,13 +39,14 @@ def signup():
     if not created_flag:
         response = jsonify({
             "status":"User not created",
-            "message":"invalid input"
+            "message":"invalid input: password too short, or \
+            empty fields or invalid email. Please check again"
             })
         response.status_code = 400
         return response
     response = jsonify({
         "message":"User created",
-        "status": "200, OK"
+        "status": "201, OK"
         })
     response.status_code = 201
     return response
@@ -76,6 +77,10 @@ def get_all_meals():
     """This method returns all meals stored in the system"""
     return Meal.all_meals()
 
+@app.route('/meals/<int:meal_id>', methods=['GET'])
+def get_meal(meal_id):
+    """Method to modify an Meal"""
+    return Meal.get_meal(meal_id)
 
 
 @app.route('/meals/', methods=['POST'])

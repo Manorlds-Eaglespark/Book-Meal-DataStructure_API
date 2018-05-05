@@ -72,22 +72,22 @@ order = [
 menus = [
     {
         'id': 0,
-        'meal_ids': '4,2,5,6,7',
+        'meal_ids': '1,2',
         'time_created': '2018-05-01 17:13:38'
     },
     {
         'id': 1,
-        'meal_ids': '4,2,5,6,7',
+        'meal_ids': '3',
         'time_created': '2018-05-04 17:13:38'
     },
     {
-        'id': 1,
-        'meal_ids': '5,6,7',
+        'id': 2,
+        'meal_ids': '3,2',
         'time_created': '2018-05-05 17:13:38'
     },
      {
-        'id': 1,
-        'meal_ids': '4,2,5,6,7',
+        'id': 3,
+        'meal_ids': '2,3',
         'time_created': '2018-05-06 17:13:38'
     }
 ]

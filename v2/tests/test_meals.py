@@ -37,6 +37,11 @@ class TestFlaskApi(unittest.TestCase):
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 201)
 
+    
+    def test_get_meal_not_in_system(self):
+        response = self.app.get('/meals/1000')
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 400)
 
     def test_add_existing_meal(self):
         response = self.app.post('/meals/', data=json.dumps(self.add_meal_exists), content_type='application/json')
