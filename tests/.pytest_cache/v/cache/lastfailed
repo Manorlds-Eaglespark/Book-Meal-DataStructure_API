@@ -1,0 +1,4 @@
+{
+  "test_meals.py::TestFlaskApi::test_adding_empty_details": true,
+  "test_menu.py::TestFlaskApi::test_create_today_menu": true
+}
