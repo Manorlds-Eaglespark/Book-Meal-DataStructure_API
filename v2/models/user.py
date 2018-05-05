@@ -2,6 +2,7 @@ import time
 import random
 from flask import jsonify
 import dummy_data
+import re
 
 class User:
       #Constructor for the User object, for initialization
@@ -14,18 +15,35 @@ class User:
 
       @staticmethod
       def create_user(name, email, password):
-        new_user = {
-              'id': random.randint(0, 1001),
-              'name': name,
-              'email': email,
-              'password': password,
-              'login_status':'logged_in'
-            }
-        dummy_data.users.append(new_user)
-        return True
+            EMAIL_REGEX = re.compile(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)")
+            if not EMAIL_REGEX.match(email):
+                  return False 
+            
+            if not name.replace(" ","").isalpha():
+                  return False
+
+            new_user = {
+                  'id': random.randint(0, 1001),
+                  'name': name,
+                  'email': email,
+                  'password': password,
+                  'login_status':'logged_in'
+                  }
+            dummy_data.users.append(new_user)
+            return True
 
       @staticmethod
       def login_user(email, password):
+
+            EMAIL_REGEX = re.compile(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)")
+            if not EMAIL_REGEX.match(email):
+                  response = jsonify(
+                        {
+                              "message":"Please enter a valid email"
+                        })
+                  response.status_code = 400
+                  return response
+
             emails, passwords = [], []    
             for user in dummy_data.users:
                   emails.append(user['email'])
@@ -43,7 +61,7 @@ class User:
                   return response
             response = jsonify(
                         {
-                              "message":"User not successfully logged in",
+                              "message":"Please provide valid login credentials"
                         })
             response.status_code = 400
             return response

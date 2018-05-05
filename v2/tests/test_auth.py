@@ -1,6 +1,7 @@
 import unittest
 import app
 import json
+import re
 
 
 class TestFlaskApi(unittest.TestCase):
@@ -48,6 +49,37 @@ class TestFlaskApi(unittest.TestCase):
         data = json.loads(response.data)
         self.assertEqual(response.status_code, 400)
 
+    def test_signup_with_invalid_email(self):
+        user_d = {
+            "name":"Timothy",
+            "email":"kyadondo",
+            "password":"xyz123"
+        }
+        """"Test API for signning up user with wrong email"""
+        response = self.app.post('/auth/signup', data= json.dumps(user_d), content_type='application/json')
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 400)
+        
+
+    def test_login_with_invalid_email(self):
+        user_d = {
+            "email":"kyadondo",
+            "password":"xyz123"
+        }
+        """"Test API for logging in up user with wrong email"""
+        response = self.app.post('/auth/login', data= json.dumps(user_d), content_type='application/json')
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 400)
+        
+    def test_signup_with_alpha_numeric_name(self):
+        user_d = {
+            "name":"Timothy565",
+            "email":"kyadondo",
+            "password":"xyz123"
+        }
+        response = self.app.post('/auth/signup', data= json.dumps(user_d), content_type='application/json')
+        data = json.loads(response.data)
+        self.assertEqual(response.status_code, 400)
 
     def test_login_user(self):
         """"Test API for logging in user"""

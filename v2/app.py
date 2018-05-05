@@ -38,7 +38,8 @@ def signup():
     created_flag = User.create_user(name, email, password)
     if not created_flag:
         response = jsonify({
-            "message":"User not created"
+            "status":"User not created",
+            "message":"invalid input"
             })
         response.status_code = 400
         return response

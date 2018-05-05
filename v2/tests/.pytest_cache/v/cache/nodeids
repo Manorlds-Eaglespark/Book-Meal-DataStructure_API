@@ -1,7 +1,10 @@
 [
   "test_auth.py::TestFlaskApi::test_empty_details",
   "test_auth.py::TestFlaskApi::test_login_user",
+  "test_auth.py::TestFlaskApi::test_login_with_invalid_email",
   "test_auth.py::TestFlaskApi::test_signup_new_user",
+  "test_auth.py::TestFlaskApi::test_signup_with_alpha_numeric_name",
+  "test_auth.py::TestFlaskApi::test_signup_with_invalid_email",
   "test_auth.py::TestFlaskApi::test_wrong_details",
   "test_meals.py::TestFlaskApi::test_add_existing_meal",
   "test_meals.py::TestFlaskApi::test_add_meal",
